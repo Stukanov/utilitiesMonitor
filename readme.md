@@ -19,7 +19,7 @@ Fields restrictions:
 - not null
 - gas, cold and hot water values should be in 0...1000 range
 
-If one or several restrictions are broken, you'll get an error message with description - in what field and what mistake you've done.
+If one or several restrictions are violated, you'll get an error message with description - in what field and what mistake you've done.
 
 **Second end-point allows you to get particual user's measurement history:**
 
