@@ -1,4 +1,4 @@
-#Gas & Water Usage Monitoring Application
+***Gas & Water Usage Monitoring Application***
 
 Simple Spring-Boot app for monitoring utilities measurement.
 App has two REST end-points. 
@@ -38,7 +38,7 @@ You need to:
 After that you can hit one of the end-points with your requests. The app doesn't persist data across 
 application launches.
 
-#Performance test
+# Performance test
 
 The performance testing profile was composed in JMeter. For convenience of the reviewer, it was designed to run as part of the existing maven project.
 
@@ -51,7 +51,7 @@ Both thread groups implement stair-like ramp-up scenario. Since no details were 
 - 3 steps of load increase by 5 minutes (30 RPS,50 RPS,80 RPS)
 - Total duration of 15 minutes
 
-##How to run
+#### How to run
 
 - download or checkout the source code
 - go to source code root directory in your terminal
@@ -59,6 +59,6 @@ Both thread groups implement stair-like ramp-up scenario. Since no details were 
 
 After GUI started, to view/edit test profile, you need to open the test profile file [test profile file](src/test/jmeter/Test.jmx) right in the JMeter GUI
 
-##Viewing the results
+#### Viewing the results
 In the end of the test JMeter will generate an interactive dashboard with the results of the test.
 By default, it is located at `target/jmeter/reports/Test/index.html`
