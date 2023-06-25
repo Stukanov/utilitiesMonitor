@@ -115,12 +115,8 @@
 							<xmx>1024</xmx>
 						</jMeterProcessJVMSettings>
 						<propertiesUser>
-							<rampUpSeconds>300</rampUpSeconds>
-							<testDurationSeconds>300</testDurationSeconds>
-							<testType>Jmeter</testType>
-							<springHost>${env.PERF_DATA_SERVICE_HOST}</springHost>
-							<springPort>${env.PERF_DATA_SERVICE_PORT}</springPort>
-							<springProtocol>http</springProtocol>
+							<springHost>${env.SPRING_HOST}</springHost>
+							<springPort>${env.SPRING_PORT}</springPort>
 							<influxHost>${env.INFLUXDB_HOST}</influxHost>
 							<influxPort>${env.INFLUXDB_PORT}</influxPort>
 							<influxUser>${env.INFLUXDB_USER}</influxUser>
@@ -134,9 +130,6 @@
 						</jmeterExtensions>
 					</configuration>
 				</plugin>
-
 		</plugins>
 	</build>
-
-
 </project>

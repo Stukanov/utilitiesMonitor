@@ -1,4 +1,4 @@
-***Gas & Water Usage Monitoring Application***
+#Gas & Water Usage Monitoring Application
 
 Simple Spring-Boot app for monitoring utilities measurement.
 App has two REST end-points. 
@@ -15,13 +15,14 @@ POST /measurements
 	"hotWater":557
 }
 ```
+
 Fields restrictions:
 - not null
 - gas, cold and hot water values should be in 0...1000 range
 
 If one or several restrictions are violated, you'll get an error message with description - in what field and what mistake you've done.
 
-**Second end-point allows you to get particual user's measurement history:**
+**Second end-point allows you to get particular user's measurement history:**
 
 ```GET /users/{userId}/measurements```
 
@@ -37,14 +38,27 @@ You need to:
 After that you can hit one of the end-points with your requests. The app doesn't persist data across 
 application launches.
 
-***Performance test***
+#Performance test
 
-To run the performance test please use
+The performance testing profile was composed in JMeter. For convenience of the reviewer, it was designed to run as part of the existing maven project.
 
-```mvn clean integration-tests```
+The load profile consists of 2 thread groups:
+- Writer - for requesting `POST /measurements`
+- Reader - for requesting `GET /users/{userId}/measurements`
 
-To open the Jmeter GUI do 
+Both thread groups implement stair-like ramp-up scenario. Since no details were specified in the test task, the load profile was defined as:
+- Peak load - 80 RPS total
+- 3 steps of load increase by 5 minutes (30 RPS,50 RPS,80 RPS)
+- Total duration of 15 minutes
 
-```mvn configure:jmeter-gui```
+##How to run
 
-After GUI started, to view/edit test profile, you need to open the test profile file [test profile file](src/test/jmeter/Test.jmx)
+- download or checkout the source code
+- go to source code root directory in your terminal
+- run command `mvn clean integration-tests` (or, if you want to open the Jmeter GUI and inspect the profile, use: `mvn configure:jmeter-gui`)
+
+After GUI started, to view/edit test profile, you need to open the test profile file [test profile file](src/test/jmeter/Test.jmx) right in the JMeter GUI
+
+##Viewing the results
+In the end of the test JMeter will generate an interactive dashboard with the results of the test.
+By default, it is located at `target/jmeter/reports/Test/index.html`

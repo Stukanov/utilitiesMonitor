@@ -77,25 +77,82 @@ props.put(&apos;queue&apos;,queue)</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Prepopulate the DB" enabled="true">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">30</stringProp>
+        </LoopController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="post /measurements" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+     &quot;userId&quot;: ${__Random(1,999999,userId)},&#xd;
+	&quot;gas&quot;: ${__Random(1,100)},&#xd;
+	&quot;coldWater&quot;: ${__Random(1,100)},&#xd;
+	&quot;hotWater&quot;: ${__Random(1,1000)}&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/measurements</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">Object queue = props.get(&apos;queue&apos;)
+queue.add(Integer.parseInt(vars.get(&apos;userId&apos;)))
+</stringProp>
+              <stringProp name="scriptLanguage">groovy</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+            <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+              <stringProp name="JSON_PATH">$.id</stringProp>
+              <stringProp name="EXPECTED_VALUE"></stringProp>
+              <boolProp name="JSONVALIDATION">false</boolProp>
+              <boolProp name="EXPECT_NULL">false</boolProp>
+              <boolProp name="INVERT">false</boolProp>
+              <boolProp name="ISREGEX">true</boolProp>
+            </JSONPathAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="MEASUREMENTS_WRITE_THREAD_GROUP" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="-1241592711">
+          <collectionProp name="-27742169">
             <stringProp name="48625">100</stringProp>
             <stringProp name="0">0</stringProp>
             <stringProp name="48625">100</stringProp>
             <stringProp name="56313">900</stringProp>
             <stringProp name="10">10</stringProp>
           </collectionProp>
-          <collectionProp name="1673286281">
-            <stringProp name="100">100</stringProp>
+          <collectionProp name="-2017324341">
+            <stringProp name="48625">100</stringProp>
             <stringProp name="50547">300</stringProp>
             <stringProp name="48625">100</stringProp>
             <stringProp name="53430">600</stringProp>
             <stringProp name="10">10</stringProp>
           </collectionProp>
-          <collectionProp name="285215433">
-            <stringProp name="100">100</stringProp>
+          <collectionProp name="889572107">
+            <stringProp name="48625">100</stringProp>
             <stringProp name="53430">600</stringProp>
             <stringProp name="48625">100</stringProp>
             <stringProp name="50547">300</stringProp>
@@ -167,22 +224,22 @@ queue.add(Integer.parseInt(vars.get(&apos;userId&apos;)))
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="MEASUREMENTS_READ_THREAD_GROUP" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="572887726">
-            <stringProp name="48625">100</stringProp>
-            <stringProp name="53">5</stringProp>
+          <collectionProp name="-1568792652">
+            <stringProp name="1629">30</stringProp>
+            <stringProp name="48">0</stringProp>
             <stringProp name="48625">100</stringProp>
             <stringProp name="56313">900</stringProp>
             <stringProp name="10">10</stringProp>
           </collectionProp>
-          <collectionProp name="1673286281">
-            <stringProp name="100">100</stringProp>
+          <collectionProp name="-1049080068">
+            <stringProp name="1629">30</stringProp>
             <stringProp name="50547">300</stringProp>
             <stringProp name="48625">100</stringProp>
             <stringProp name="53430">600</stringProp>
             <stringProp name="10">10</stringProp>
           </collectionProp>
-          <collectionProp name="285215433">
-            <stringProp name="100">100</stringProp>
+          <collectionProp name="1857816380">
+            <stringProp name="1629">30</stringProp>
             <stringProp name="53430">600</stringProp>
             <stringProp name="48625">100</stringProp>
             <stringProp name="50547">300</stringProp>
