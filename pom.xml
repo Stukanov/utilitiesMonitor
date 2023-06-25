@@ -51,7 +51,90 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-service</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-service</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.lazerycode.jmeter</groupId>
+				<artifactId>jmeter-maven-plugin</artifactId>
+				<version>3.3.0</version>
+					<executions>
+						<!-- Generate JMeter configuration -->
+						<execution>
+							<id>configuration</id>
+							<phase>integration-test</phase>
+							<goals>
+								<goal>configure</goal>
+							</goals>
+						</execution>
+						<!-- Run JMeter tests -->
+						<execution>
+							<id>jmeter-tests</id>
+							<phase>integration-test</phase>
+							<goals>
+								<goal>jmeter</goal>
+							</goals>
+						</execution>
+						<!-- Fail build on errors in test -->
+						<execution>
+							<id>jmeter-check-results</id>
+							<phase>integration-test</phase>
+							<goals>
+								<goal>results</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<jmeterVersion>5.4.1</jmeterVersion>
+						<generateReports>true</generateReports>
+						<jMeterProcessJVMSettings>
+							<!--The Xmx value should be 25%
+                            of the available memory on the device
+                             However, where there is 2 GB or less of physical memory,
+                              the value set is 50% of available memory
+                               with a minimum value of 16 MB
+                               and a maximum value of 512 MB.-->
+							<xms>64</xms>
+							<xmx>1024</xmx>
+						</jMeterProcessJVMSettings>
+						<propertiesUser>
+							<rampUpSeconds>300</rampUpSeconds>
+							<testDurationSeconds>300</testDurationSeconds>
+							<testType>Jmeter</testType>
+							<springHost>${env.PERF_DATA_SERVICE_HOST}</springHost>
+							<springPort>${env.PERF_DATA_SERVICE_PORT}</springPort>
+							<springProtocol>http</springProtocol>
+							<influxHost>${env.INFLUXDB_HOST}</influxHost>
+							<influxPort>${env.INFLUXDB_PORT}</influxPort>
+							<influxUser>${env.INFLUXDB_USER}</influxUser>
+							<influxPassword>${env.INFLUXDB_PASSWORD}</influxPassword>
+						</propertiesUser>
+						<jmeterExtensions>
+							<artifact>com.rationaleemotions.jmeter.plugins:influxdb-writer:1.5.0</artifact>
+							<artifact>kg.apc:jmeter-plugins-casutg:2.9</artifact>
+							<artifact>kg.apc:jmeter-plugins-tst:2.5</artifact>
+							<artifact>kg.apc:jmeter-plugins-autostop:0.1</artifact>
+						</jmeterExtensions>
+					</configuration>
+				</plugin>
+
 		</plugins>
 	</build>
 

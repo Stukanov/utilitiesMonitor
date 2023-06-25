@@ -36,3 +36,15 @@ You need to:
 
 After that you can hit one of the end-points with your requests. The app doesn't persist data across 
 application launches.
+
+***Performance test***
+
+To run the performance test please use
+
+```mvn clean integration-tests```
+
+To open the Jmeter GUI do 
+
+```mvn configure:jmeter-gui```
+
+After GUI started, to view/edit test profile, you need to open the test profile file [test profile file](src/test/jmeter/Test.jmx)
